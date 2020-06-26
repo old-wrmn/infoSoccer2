@@ -4,23 +4,62 @@ import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 import dateHandler from '/js/handler/dateHandler.js';
 
-
+//api call
 const api = new fbAPI('42a847b581334122919c6632a0d07ced');
 
+//today match in utc +7
 const getTodayMatches = () => {
-    api.matches()
+    api.matches(dateGet(-1), dateGet())
         .then(data => displayMatch(data));
 }
 
-
-const getMatches = () => {
-    console.log('mantap');
+//detail match
+const getMatch = (id) => {
+    api.matchInfo(id)
+        .then(data => detailMatch(data));
 }
 
+//match displayer
+const displayMatch = (data) => {
+    let matchesHTML = `<h4>${dateHandler.format(dateGet())}</h4>`;
+
+    if (data.count == 0) {
+        matchesHTML += 'Tidak ada pertandingan hari ini'
+    }
+
+    data.matches.forEach((match) => {
+        matchesHTML += callMatch(match);
+    });
+    document.getElementById("matches").innerHTML = matchesHTML;
+    document.querySelectorAll(".card-content a, .card-action a").forEach((elm) => {
+        elm.addEventListener("click", (event) => {
+            const urlHash = event.target.getAttribute("href");
+            const path = pathHandler(urlHash.substr(1));
+            loadPage(path);
+        });
+    });
+}
+
+//match detail displayer
+const detailMatch = (data) => {
+    console.log(data);
+    let matchHTML = '';
+    matchHTML += callDetail(data);
+    document.getElementById("detail").innerHTML = matchHTML;
+    document.querySelectorAll(".card-content a").forEach((elm) => {
+        elm.addEventListener("click", (event) => {
+            const urlHash = event.target.getAttribute("href");
+            const path = pathHandler(urlHash.substr(1));
+            loadPage(path);
+        });
+    });
+}
+
+//matches render
 const callMatch = (match) => {
     const res = `    
     <div class="col s12 m6">
-        <div class="card">
+        <div class="card grey lighten-4">
             <div class="card-action">
                 <a href="#match?id=${match.id}">
                     ${match.competition.name}
@@ -35,7 +74,7 @@ const callMatch = (match) => {
                         </a>
                     </div>
                     <div class="col l1 right">
-                        0
+                        ${+[match.score.fullTime.homeTeam]}
                     </div>
                 </div>
                 <div class="row">
@@ -45,9 +84,11 @@ const callMatch = (match) => {
                         </a>
                     </div>
                     <div class="col l1 right">
-                        0
+                        ${+[match.score.fullTime.awayTeam]}
                     </div>
                 </div>
+                <h6 class="right">${match.status}</h6>
+                <br>
             </div>
             <div class="card-action">
                 <a href="#match?id=${match.id}">
@@ -60,26 +101,118 @@ const callMatch = (match) => {
     return res;
 }
 
-const displayMatch = (data) => {
-    console.log('display');
-    console.log(data);
-    let matchesHTML = `<h4>${dateHandler.format(dateGet())}</h4>`;
-
-    data.matches.forEach((match) => {
-        matchesHTML += callMatch(match);
-    });
-    document.getElementById("matches").innerHTML = matchesHTML;
-    document.querySelectorAll(".card-content a, .card-action a").forEach((elm) => {
-        elm.addEventListener("click", (event) => {
-            const urlHash = event.target.getAttribute("href");
-            const path = pathHandler(urlHash.substr(1));
-            let page = path.target;
-            loadPage(page);
-        });
-    });
+//detail render
+const callDetail = (data) => {
+    const res = `
+        <div class="card grey lighten-4">
+            <div class="card-content center">
+                <div class="row">
+                    <span class="card-title">${data.match.competition.name}</span>
+                    <span>${dateHandler.date(data.match.utcDate)} WIB (${data.match.status})</span>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        <a class="link-to" href="#teams?teamId=${data.match.homeTeam.id}">
+                            ${data.match.homeTeam.name}
+                        </a>
+                    </div>
+                    <div class="col s4">
+                        v
+                    </div>
+                    <div class="col s4">
+                        <a class="link-to" href="#teams?teamId=${data.match.awayTeam.id}">
+                            ${data.match.awayTeam.name}
+                        </a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.match.score.fullTime.homeTeam]}
+                    </div>
+                    <div class="col s4">
+                        Full Time
+                    </div>
+                    <div class="col s4">
+                        ${+[data.match.score.fullTime.awayTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.match.score.halfTime.homeTeam]}
+                    </div>
+                    <div class="col s4">
+                        Half Time
+                    </div>
+                    <div class="col s4">
+                        ${+[data.match.score.halfTime.awayTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.match.score.extraTime.homeTeam]}
+                    </div>
+                    <div class="col s4">
+                        Extra Time
+                    </div>
+                    <div class="col s4">
+                        ${+[data.match.score.extraTime.awayTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.match.score.penalties.homeTeam]}
+                    </div>
+                    <div class="col s4">
+                        Penalty
+                    </div>
+                    <div class="col s4">
+                        ${+[data.match.score.penalties.awayTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <span>Head 2 Head</span>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.head2head.homeTeam.wins]}
+                    </div>
+                    <div class="col s4">
+                        Win
+                    </div>
+                    <div class="col s4">
+                        ${+[data.head2head.awayTeam.wins]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.head2head.homeTeam.draws]}
+                    </div>
+                    <div class="col s4">
+                        Draw
+                    </div>
+                    <div class="col s4">
+                        ${+[data.head2head.awayTeam.draws]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${+[data.head2head.homeTeam.losses]}
+                    </div>
+                    <div class="col s4">
+                        Lose
+                    </div>
+                    <div class="col s4">
+                        ${+[data.head2head.awayTeam.losses]}
+                    </div>
+                </div>
+                
+            </>
+        </div>`;
+    return res;
 }
+
 
 export default {
     getTodayMatches,
-    getMatches
+    getMatch
 };

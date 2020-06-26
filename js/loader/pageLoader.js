@@ -1,17 +1,15 @@
 import match from './matchLoader.js';
 // Load page content
-function loadPage(page) {
-    var xhttp = new XMLHttpRequest();
+function loadPage(path = {}) {
+    const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
-            var content = document.querySelector("#body-content");
-
-            if (page === "home") {
+            const content = document.querySelector("#body-content");
+            if (path.target === "home") {
                 match.getTodayMatches();
+            } else if (path.target === "match") {
+                match.getMatch(path.id);
             }
-            // } else if (page === "saved") {
-            //     getSavedArticles();
-            // }
 
             if (this.status == 200) {
                 content.innerHTML = xhttp.responseText;
@@ -22,7 +20,7 @@ function loadPage(page) {
             }
         }
     };
-    xhttp.open("GET", "/html/pages/" + page + ".html", true);
+    xhttp.open("GET", "/html/pages/" + path.target + ".html", true);
     xhttp.send();
 }
 

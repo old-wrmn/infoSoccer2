@@ -1,3 +1,4 @@
+//path handler
 const pathHandler = (path) => {
     let res = {};
     const main = path.split('?');
@@ -12,7 +13,6 @@ const pathHandler = (path) => {
         });
     }
     return res;
-
 }
 
 export default pathHandler;

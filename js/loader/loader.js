@@ -6,12 +6,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const nav = document.querySelectorAll(".sidenav");
     const urlHash = window.location.hash;
     const path = pathHandler(urlHash.substr(1));
-    let page = path.target;
-    // console.log(page);
 
     M.Sidenav.init(nav);
-    loadNav(page);
+    loadNav();
 
-    if (page == '') page = 'home';
-    loadPage(page);
+    if (path.target == '') path.target = 'home';
+    loadPage(path);
 });

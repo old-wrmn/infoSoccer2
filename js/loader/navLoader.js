@@ -1,7 +1,7 @@
 import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 
-const loadNav = (page) => {
+const loadNav = () => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -20,8 +20,7 @@ const loadNav = (page) => {
 
                     const urlHash = event.target.getAttribute("href");
                     const path = pathHandler(urlHash.substr(1));
-                    let page = path.target;
-                    loadPage(page);
+                    loadPage(path);
                 });
             });
         }
