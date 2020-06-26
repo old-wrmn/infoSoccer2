@@ -4,10 +4,43 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Document</title>
+  <meta name="description" content="Info Soccer" />
+  <link rel="stylesheet" href="css/materialize.min.css">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="images/icons/icon-72x72.png">
+  <link rel="apple-touch-icon" href="images/icons/icon-72x72.png">
+  <meta name="theme-color" content="#EEEEEE">
+  <title>Info Soccer</title>
 </head>
 
-<body></body>
-<script type="module" src="./js/script.js"></script>
+<body>
+  <nav class="nav-extended grey lighten-1" role="navigation">
+    <div class="nav-wrapper container">
+      <a href="#" class="brand-logo" id="logo-container"> info Soccer</a>
+      <a href="#" class="sidenav-trigger" data-target="nav-mobile">&#9776;</a>
+    </div>
+    <div class="nav-conten container">
+      <ul class="tabs tabs-transparent hide-on-med-and-down"></ul>
+      <ul id='dropdown1' class='dropdown-content'>
+        <li><a href="#!">one</a></li>
+        <li><a href="#!">two</a></li>
+        <li class="divider" tabindex="-1"></li>
+        <li><a href="#!">three</a></li>
+        <li><a href="#!"><i class="material-icons">view_module</i>four</a></li>
+        <li><a href="#!"><i class="material-icons">cloud</i>five</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <ul class="sidenav" id="nav-mobile"></ul>
+  <!-- Akhir Navigasi -->
+
+  <div class="container" id="body-content"></div>
+</body>
+<!-- <script src="./script.js"></script> -->
+<script src="./js/lib/materialize.min.js"></script>
+<script type="module" src="./js/loader/nav.js"></script>
+
 
 </html>
