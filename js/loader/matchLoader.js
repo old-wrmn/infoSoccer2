@@ -1,12 +1,13 @@
-import fbAPI from './../data/fbApi.js';
-import dateGet from './../date.js';
+import fbAPI from '/js/data/fbApi.js';
+import dateGet from '/js/date.js';
 import loadPage from './pageLoader.js';
+import pathHandler from '/js/handler/pathHandler.js';
+import dateHandler from '/js/handler/dateHandler.js';
 
 
 const api = new fbAPI('42a847b581334122919c6632a0d07ced');
 
 const getTodayMatches = () => {
-    // console.log('nice');
     api.matches()
         .then(data => displayMatch(data));
 }
@@ -16,50 +17,67 @@ const getMatches = () => {
     console.log('mantap');
 }
 
+const callMatch = (match) => {
+    const res = `    
+    <div class="col s12 m6">
+        <div class="card">
+            <div class="card-action">
+                <a href="#match?id=${match.id}">
+                    ${match.competition.name}
+                    <div class="right">${dateHandler.time(match.utcDate)}</div>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col l11">
+                        <a class="link-to" href="#teams?teamId=${match.homeTeam.id}">
+                            ${match.homeTeam.name}
+                        </a>
+                    </div>
+                    <div class="col l1 right">
+                        0
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l11">
+                        <a class="link-to" href="#teams?teamId=${match.awayTeam.id}">
+                            ${match.awayTeam.name}
+                        </a>
+                    </div>
+                    <div class="col l1 right">
+                        0
+                    </div>
+                </div>
+            </div>
+            <div class="card-action">
+                <a href="#match?id=${match.id}">
+                    Detail >>
+                </a>
+            </div>
+        </div>
+    </div>
+    `;
+    return res;
+}
+
 const displayMatch = (data) => {
     console.log('display');
     console.log(data);
-    let articlesHTML = "";
+    let matchesHTML = `<h4>${dateHandler.format(dateGet())}</h4>`;
 
-    data.matches.forEach(function (match) {
-        articlesHTML += `
-            <div class="col s12 m6">
-                <div class="card">
-                <a href="./article.html?id=${match.id}">
-                    <div class="card-image waves-effect waves-block waves-light">
-                    </div>
-                </a>
-                <div class="card-content">
-                    <a href="/#teams?teamId=${match.awayTeam.id}">${match.awayTeam.name}</a>
-                    <p>${match.homeTeam.name}</p>
-                </div>
-                </div>
-            </div>
-          `;
+    data.matches.forEach((match) => {
+        matchesHTML += callMatch(match);
     });
-    // Sisipkan komponen card ke dalam elemen dengan id #content
-    document.getElementById("matches").innerHTML = articlesHTML;
-    document.querySelectorAll(".card-content a").forEach((elm) => {
+    document.getElementById("matches").innerHTML = matchesHTML;
+    document.querySelectorAll(".card-content a, .card-action a").forEach((elm) => {
         elm.addEventListener("click", (event) => {
-            let page = getParams(window.location.href);;
-            // var page = urlParams.get("teamId");
-            console.log(page);
+            const urlHash = event.target.getAttribute("href");
+            const path = pathHandler(urlHash.substr(1));
+            let page = path.target;
+            loadPage(page);
         });
     });
 }
-
-const getParams = (url) => {
-    let params = {};
-    let parser = document.createElement('a');
-    parser.href = url;
-    let query = parser.search.substring(1);
-    let vars = query.split('&');
-    for (let i = 0; i < vars.length; i++) {
-        let pair = vars[i].split('=');
-        params[pair[0]] = decodeURIComponent(pair[1]);
-    }
-    return params;
-};
 
 export default {
     getTodayMatches,

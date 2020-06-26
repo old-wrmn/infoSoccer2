@@ -64,7 +64,7 @@ class footBallsApi {
     //matches
     //default today
     async matches(dateFrom = dateGet(), dateTo = dateGet()) {
-        const result = await this.call(`matches?dateFrom=${dateFrom}&dateTo=${dateTo}`);
+        const result = await this.call(`matches?dateFrom=${dateFrom}&dateTo=${dateTo}&competitions=2002,2014,2019,2021`);
         return result;
     }
 

@@ -1,4 +1,5 @@
 import loadPage from './pageLoader.js';
+import pathHandler from '/js/handler/pathHandler.js';
 
 const loadNav = (page) => {
     const xhttp = new XMLHttpRequest();
@@ -17,7 +18,9 @@ const loadNav = (page) => {
                     const sidenav = document.querySelector(".sidenav");
                     M.Sidenav.getInstance(sidenav).close();
 
-                    page = event.target.getAttribute("href").substr(1);
+                    const urlHash = event.target.getAttribute("href");
+                    const path = pathHandler(urlHash.substr(1));
+                    let page = path.target;
                     loadPage(page);
                 });
             });
