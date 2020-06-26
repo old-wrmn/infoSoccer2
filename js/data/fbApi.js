@@ -1,4 +1,4 @@
-import dateGet from './date.js';
+import dateGet from '/js/date.js';
 
 class footBallsApi {
     constructor(token) {

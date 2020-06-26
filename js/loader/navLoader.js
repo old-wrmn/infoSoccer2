@@ -1,4 +1,6 @@
-const loadNav = () => {
+import loadPage from './pageLoader.js';
+
+const loadNav = (page) => {
     const xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
@@ -10,7 +12,7 @@ const loadNav = () => {
             });
 
             //event listener
-            document.querySelectorAll(".sidenav a, .topnav a").forEach((elm) => {
+            document.querySelectorAll(".sidenav a, .tabs a").forEach((elm) => {
                 elm.addEventListener("click", (event) => {
                     const sidenav = document.querySelector(".sidenav");
                     M.Sidenav.getInstance(sidenav).close();

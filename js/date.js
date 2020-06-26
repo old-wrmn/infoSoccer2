@@ -1,7 +1,6 @@
 const dateGet = (itr = 0) => {
-    const d = new Date();
-    const f = modDate(d, itr);
-    return f;
+    const date = new Date();
+    return modDate(date, itr);
 }
 
 const modDate = (date, itr) => {

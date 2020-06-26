@@ -1,13 +1,13 @@
 import fbAPI from './fbApi.js';
-import dateGet from '../date.js';
+import dateGet from '/js/date.js';
 
 let comp = new fbAPI('42a847b581334122919c6632a0d07ced');
 
 // comp.call('competitions')
 //     .then(data => console.log(data));
 
-comp.comp(`PD`)
-    .then(result => console.log(result));
+// comp.comp(`PD`)
+//     .then(result => console.log(result));
 
 // comp.compStandings(2021)
 //     .then(result => console.log(result));

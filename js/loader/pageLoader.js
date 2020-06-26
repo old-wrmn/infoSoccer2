@@ -1,13 +1,14 @@
+import match from './matchLoader.js';
 // Load page content
 function loadPage(page) {
-    // fetch('pages/' + page + '.html')
     var xhttp = new XMLHttpRequest();
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
             var content = document.querySelector("#body-content");
 
-            // if (page === "home") {
-            //     getArticles();
+            if (page === "home") {
+                match.getTodayMatches();
+            }
             // } else if (page === "saved") {
             //     getSavedArticles();
             // }
@@ -21,7 +22,7 @@ function loadPage(page) {
             }
         }
     };
-    xhttp.open("GET", "pages/" + page + ".html", true);
+    xhttp.open("GET", "/html/pages/" + page + ".html", true);
     xhttp.send();
 }
 
