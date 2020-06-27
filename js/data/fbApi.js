@@ -55,6 +55,11 @@ class footBallsApi {
         return result;
     }
 
+    async teamMatches(teamId) {
+        const result = await this.call(`teams/${teamId}/matches?status=SCHEDULED&limit=10`);
+        return result;
+    }
+
     //player info
     async player(playerId) {
         const result = await this.call(`players/${playerId}`);

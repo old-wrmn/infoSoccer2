@@ -19,6 +19,11 @@ const getMatch = (id) => {
         .then(data => detailMatch(data));
 }
 
+const getTeamMatches = (id) => {
+    api.teamMatches(id)
+        .then(data => displayMatch(data))
+}
+
 //match displayer
 const displayMatch = (data) => {
     let matchesHTML = `<h4>${dateHandler.format(dateGet())}</h4>`;
@@ -42,7 +47,6 @@ const displayMatch = (data) => {
 
 //match detail displayer
 const detailMatch = (data) => {
-    console.log(data);
     let matchHTML = '';
     matchHTML += callDetail(data);
     document.getElementById("detail").innerHTML = matchHTML;
@@ -63,13 +67,13 @@ const callMatch = (match) => {
             <div class="card-action">
                 <a href="#match?id=${match.id}">
                     ${match.competition.name}
-                    <div class="right">${dateHandler.time(match.utcDate)}</div>
+                    <div class="right">${dateHandler.date(match.utcDate)}</div>
                 </a>
             </div>
             <div class="card-content">
                 <div class="row">
                     <div class="col l11">
-                        <a class="link-to" href="#teams?teamId=${match.homeTeam.id}">
+                        <a class="link-to" href="#team?teamId=${match.homeTeam.id}">
                             ${match.homeTeam.name}
                         </a>
                     </div>
@@ -79,7 +83,7 @@ const callMatch = (match) => {
                 </div>
                 <div class="row">
                     <div class="col l11">
-                        <a class="link-to" href="#teams?teamId=${match.awayTeam.id}">
+                        <a class="link-to" href="#team?teamId=${match.awayTeam.id}">
                             ${match.awayTeam.name}
                         </a>
                     </div>
@@ -112,7 +116,7 @@ const callDetail = (data) => {
                 </div>
                 <div class="row">
                     <div class="col s4">
-                        <a class="link-to" href="#teams?teamId=${data.match.homeTeam.id}">
+                        <a class="link-to" href="#team?teamId=${data.match.homeTeam.id}">
                             ${data.match.homeTeam.name}
                         </a>
                     </div>
@@ -120,7 +124,7 @@ const callDetail = (data) => {
                         v
                     </div>
                     <div class="col s4">
-                        <a class="link-to" href="#teams?teamId=${data.match.awayTeam.id}">
+                        <a class="link-to" href="#team?teamId=${data.match.awayTeam.id}">
                             ${data.match.awayTeam.name}
                         </a>
                     </div>
@@ -141,10 +145,21 @@ const callDetail = (data) => {
                         ${+[data.match.score.halfTime.homeTeam]}
                     </div>
                     <div class="col s4">
-                        Half Time
+                        1 st Half
                     </div>
                     <div class="col s4">
                         ${+[data.match.score.halfTime.awayTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s4">
+                        ${0+data.match.score.fullTime.homeTeam-data.match.score.halfTime.homeTeam-data.match.score.extraTime.homeTeam-data.match.score.penalties.homeTeam}
+                    </div>
+                    <div class="col s4">
+                        2nd Half
+                    </div>
+                    <div class="col s4">
+                        ${0+data.match.score.fullTime.awayTeam-data.match.score.halfTime.awayTeam-data.match.score.extraTime.awayTeam-data.match.score.penalties.awayTeam}
                     </div>
                 </div>
                 <div class="row">
@@ -214,5 +229,6 @@ const callDetail = (data) => {
 
 export default {
     getTodayMatches,
+    getTeamMatches,
     getMatch
 };

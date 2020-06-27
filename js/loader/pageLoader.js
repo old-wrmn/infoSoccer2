@@ -1,4 +1,5 @@
 import match from './matchLoader.js';
+import team from './teamLoader.js';
 // Load page content
 function loadPage(path = {}) {
     const xhttp = new XMLHttpRequest();
@@ -9,6 +10,8 @@ function loadPage(path = {}) {
                 match.getTodayMatches();
             } else if (path.target === "match") {
                 match.getMatch(path.id);
+            } else if (path.target === "team") {
+                team.teamDetail(path.teamId);
             }
 
             if (this.status == 200) {

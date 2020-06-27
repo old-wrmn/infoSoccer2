@@ -27,17 +27,24 @@ const date = (date) => {
     res.setHours(res.getHours() + 7);
     let minutes = res.getMinutes();
     let month = res.getMonth() + 1;
-    if (minutes < 10) {
-        minutes = '0' + minutes;
-    }
-    if (month < 10) {
-        month = '0' + month;
-    }
-    const fRes = `Tanggal ${res.getDate()}-${month}-${res.getFullYear()} Pukul ${res.getHours()}:${minutes}`
+    let nDate = res.getDate();
+    let hour = res.getHours();
+    if (minutes < 10) minutes = '0' + minutes;
+    if (month < 10) month = '0' + month;
+    if (nDate < 10) nDate = '0' + nDate;
+    if (hour < 10) hour = '0' + hour;
+    const fRes = `${hour} : ${minutes} WIB <br>${nDate}-${month}-${res.getFullYear()} `
     return fRes;
+}
+
+const getAge = (date) => {
+    const res = localFormat(date);
+    const today = new Date();
+    return today.getFullYear() - res.getFullYear();
 }
 export default {
     format,
+    getAge,
     date,
     time
 };
