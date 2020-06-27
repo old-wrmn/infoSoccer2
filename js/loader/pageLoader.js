@@ -1,5 +1,6 @@
 import match from './matchLoader.js';
 import team from './teamLoader.js';
+import comp from './compLoader.js';
 // Load page content
 function loadPage(path = {}) {
     const xhttp = new XMLHttpRequest();
@@ -12,6 +13,8 @@ function loadPage(path = {}) {
                 match.getMatch(path.id);
             } else if (path.target === "team") {
                 team.teamDetail(path.teamId);
+            } else if (path.target === "competition") {
+                comp.compDetail(path.compId);
             }
 
             if (this.status == 200) {

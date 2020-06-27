@@ -33,7 +33,7 @@ const date = (date) => {
     if (month < 10) month = '0' + month;
     if (nDate < 10) nDate = '0' + nDate;
     if (hour < 10) hour = '0' + hour;
-    const fRes = `${hour} : ${minutes} WIB <br>${nDate}-${month}-${res.getFullYear()} `
+    const fRes = `${nDate}-${month}-${res.getFullYear()} <br> ${hour} : ${minutes} WIB `
     return fRes;
 }
 

@@ -21,12 +21,16 @@ const getMatch = (id) => {
 
 const getTeamMatches = (id) => {
     api.teamMatches(id)
-        .then(data => displayMatch(data))
+        .then(data => displayMatch(data));
 }
 
+const getCompMatches = (id) => {
+    api.compMatches(id, dateGet(-2), dateGet(2))
+        .then(data => displayMatch(data));
+}
 //match displayer
 const displayMatch = (data) => {
-    let matchesHTML = `<h4>${dateHandler.format(dateGet())}</h4>`;
+    let matchesHTML = ``;
 
     if (data.count == 0) {
         matchesHTML += 'Tidak ada pertandingan hari ini'
@@ -112,7 +116,7 @@ const callDetail = (data) => {
             <div class="card-content center">
                 <div class="row">
                     <span class="card-title">${data.match.competition.name}</span>
-                    <span>${dateHandler.date(data.match.utcDate)} WIB (${data.match.status})</span>
+                    <span>${dateHandler.date(data.match.utcDate)} (${data.match.status})</span>
                 </div>
                 <div class="row">
                     <div class="col s4">
@@ -145,7 +149,7 @@ const callDetail = (data) => {
                         ${+[data.match.score.halfTime.homeTeam]}
                     </div>
                     <div class="col s4">
-                        1 st Half
+                        1st Half
                     </div>
                     <div class="col s4">
                         ${+[data.match.score.halfTime.awayTeam]}
@@ -230,5 +234,6 @@ const callDetail = (data) => {
 export default {
     getTodayMatches,
     getTeamMatches,
+    getCompMatches,
     getMatch
 };

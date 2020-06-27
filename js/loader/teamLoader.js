@@ -1,7 +1,4 @@
 import fbAPI from '/js/data/fbApi.js';
-import dateGet from '/js/date.js';
-import loadPage from './pageLoader.js';
-import pathHandler from '/js/handler/pathHandler.js';
 import loadMatch from './matchLoader.js';
 import dateHandler from '/js/handler/dateHandler.js';
 
@@ -45,6 +42,17 @@ const detailTeam = (data) => {
                     </div>
                     <div class="col s8">
                         ${getCoaches(data.squad)}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col s3">
+                        Venue
+                    </div> 
+                    <div class="col s1">
+                      :
+                    </div>
+                    <div class="col s8">
+                        ${data.venue}
                     </div>
                 </div>
                 <div class="row">
@@ -104,6 +112,7 @@ const getCoaches = (data) => {
             res.push(member.name);
         }
     })
+    //in case coach more than 1
     return res.join(', ')
 }
 
