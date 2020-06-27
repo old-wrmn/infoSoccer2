@@ -69,7 +69,7 @@ const callMatch = (match) => {
     <div class="col s12 m6">
         <div class="card grey lighten-4">
             <div class="card-action">
-                <a href="#match?id=${match.id}">
+                <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
                     ${match.competition.name}
                     <div class="right">${dateHandler.date(match.utcDate)}</div>
                 </a>
@@ -99,7 +99,7 @@ const callMatch = (match) => {
                 <br>
             </div>
             <div class="card-action">
-                <a href="#match?id=${match.id}">
+                <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
                     Detail >>
                 </a>
             </div>
