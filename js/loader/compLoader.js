@@ -4,10 +4,11 @@ import loadPage from './pageLoader.js';
 import loadMatch from './matchLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 
-
+//call class
 const api = new fbAPI();
 const fbC = new fbCache();
 
+//detail competition loader for competition page
 const compDetail = (compId) => {
     fbC.compStandings(compId)
         .then(data => {
@@ -24,6 +25,7 @@ const compDetail = (compId) => {
     loadMatch.getCompMatches(compId);
 }
 
+//get competition info for competition page
 const getInfo = (data) => {
     let infoHTML = '';
     infoHTML += `
@@ -32,6 +34,8 @@ const getInfo = (data) => {
     `;
     document.getElementById('info').innerHTML = infoHTML;
 }
+
+//get competition standings for competition page
 const getStandings = (data) => {
     // console.log(data);
     let standingsHTML = '';

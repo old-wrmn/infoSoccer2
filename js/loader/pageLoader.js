@@ -7,6 +7,8 @@ function loadPage(path = {}) {
     xhttp.onreadystatechange = function () {
         if (this.readyState == 4) {
             const content = document.querySelector("#body-content");
+
+            //call page on condition
             if (path.target === "home") {
                 match.getTodayMatches();
             } else if (path.target === "match") {
@@ -21,6 +23,7 @@ function loadPage(path = {}) {
                 match.getSavedMatch(path.id);
             }
 
+            //status handler
             if (this.status == 200) {
                 content.innerHTML = xhttp.responseText;
             } else if (this.status == 404) {
@@ -30,6 +33,7 @@ function loadPage(path = {}) {
             }
         }
     };
+    //page call
     xhttp.open("GET", "/html/pages/" + path.target + ".html", true);
     xhttp.send();
 }

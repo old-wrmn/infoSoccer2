@@ -1,5 +1,6 @@
 import idb from '/js/lib/idb.js';
 
+//initialize
 var dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
     var articlesObjectStore = upgradeDb.createObjectStore("articles", {
         keyPath: "match.id"
@@ -9,6 +10,7 @@ var dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
     });
 });
 
+//save
 function saveForLater(article) {
     dbPromised
         .then(function (db) {
@@ -23,6 +25,7 @@ function saveForLater(article) {
         });
 }
 
+//get all match saved
 function getAll() {
     return new Promise(function (resolve, reject) {
         dbPromised
@@ -37,7 +40,7 @@ function getAll() {
     });
 }
 
-
+//get match saved by id
 function getById(id) {
     return new Promise(function (resolve, reject) {
         dbPromised

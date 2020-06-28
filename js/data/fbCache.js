@@ -1,4 +1,3 @@
-import dateGet from '/js/date.js';
 import fbApi from './fbApi.js';
 
 class footBallsApi extends fbApi {

@@ -2,7 +2,7 @@ import loadNav from './navLoader.js';
 import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 
-
+//event loaded content listener
 document.addEventListener("DOMContentLoaded", function () {
     const nav = document.querySelectorAll(".sidenav");
     const urlHash = window.location.hash;
@@ -15,6 +15,7 @@ document.addEventListener("DOMContentLoaded", function () {
     loadPage(path);
 });
 
+//service worker
 if ("serviceWorker" in navigator) {
     window.addEventListener("load", function () {
         navigator.serviceWorker

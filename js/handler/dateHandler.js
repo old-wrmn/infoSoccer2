@@ -4,6 +4,7 @@ const format = (date) => {
     return [res[2], res[1], res[0]].join('-');
 }
 
+//reformat date from api
 const localFormat = (date) => {
     const format = date.replace(/[TZ]+/g, ' ');
     const res = new Date(format);
@@ -22,6 +23,7 @@ const time = (time) => {
     return fRes;
 }
 
+//get local time
 const date = (date) => {
     const res = localFormat(date);
     res.setHours(res.getHours() + 7);
@@ -37,11 +39,13 @@ const date = (date) => {
     return fRes;
 }
 
+//get age for player
 const getAge = (date) => {
     const res = localFormat(date);
     const today = new Date();
     return today.getFullYear() - res.getFullYear();
 }
+
 export default {
     format,
     getAge,

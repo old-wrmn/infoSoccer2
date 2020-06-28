@@ -5,6 +5,8 @@ const pathHandler = (path) => {
     Object.assign(res, {
         "target": main[0]
     });
+
+    //get parameter
     if (main[1] !== undefined) {
         const param = main[1].split('&');
         param.forEach(element => {

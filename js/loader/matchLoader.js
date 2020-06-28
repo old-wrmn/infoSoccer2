@@ -12,7 +12,6 @@ const fbC = new fbCache();
 
 //today match in utc +7
 const getTodayMatches = () => {
-
     fbC.matches(dateGet(-1), dateGet())
         .then(data => {
             if (data !== undefined) displayMatch(data);
@@ -32,6 +31,7 @@ const getMatch = (id) => {
         .then(data => detailMatch(data));
 }
 
+//get team matches for team page
 const getTeamMatches = (id) => {
     fbC.teamMatches(id)
         .then(data => {
@@ -41,6 +41,7 @@ const getTeamMatches = (id) => {
         .then(data => displayMatch(data));
 }
 
+//get competition matches for competition page
 const getCompMatches = (id) => {
     fbC.compMatches(id, dateGet(-2), dateGet(2))
         .then(data => {
@@ -50,16 +51,19 @@ const getCompMatches = (id) => {
         .then(data => displayMatch(data));
 }
 
+//get all saved match from index db
 const getSavedMatches = () => {
     fbDb.getAll()
         .then(data => displaySavedMatch(data));
 }
 
+//get saved match from index db
 const getSavedMatch = (id) => {
     fbDb.getById(id)
         .then(data => detailMatch(data));
 }
 
+//saved match data displayer
 const displaySavedMatch = (data) => {
     let matchesHTML = ``;
 
@@ -161,6 +165,7 @@ const callMatch = (match) => {
     return res;
 }
 
+//saved matches render
 const callSavedMatch = (match) => {
     const res = `    
     <div class="col s12 m6">

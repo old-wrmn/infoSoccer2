@@ -3,10 +3,11 @@ import fbCache from '/js/data/fbCache.js';
 import loadMatch from './matchLoader.js';
 import dateHandler from '/js/handler/dateHandler.js';
 
-
+//class call
 const api = new fbAPI();
 const fbC = new fbCache();
 
+//call team detail by id
 const teamDetail = (id) => {
     fbC.team(id)
         .then(data => {
@@ -23,6 +24,7 @@ const teamDetail = (id) => {
     loadMatch.getTeamMatches(id);
 }
 
+//detail team render
 const detailTeam = (data) => {
     let teamHtml = `
         <h4>${data.name}</h4>
@@ -114,6 +116,7 @@ const detailTeam = (data) => {
     document.getElementById('team').innerHTML = teamHtml;
 }
 
+//get squad member with role coach
 const getCoaches = (data) => {
     let res = [];
     data.forEach((member) => {
@@ -125,6 +128,7 @@ const getCoaches = (data) => {
     return res.join(', ')
 }
 
+//get squad member with role player
 const getMember = (data) => {
     let membersHTML = '';
     data.forEach((member) => {
