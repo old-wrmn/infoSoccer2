@@ -1,5 +1,6 @@
 import fbAPI from '/js/data/fbApi.js';
 import fbCache from '/js/data/fbCache.js';
+import fbDb from '/js/data/fbDb.js';
 import dateGet from '/js/date.js';
 import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
@@ -84,6 +85,7 @@ const detailMatch = (data) => {
     let save = document.getElementById("save");
     save.onclick = function () {
         test(data);
+        fbDb.saveForLater(data);
     }
 }
 

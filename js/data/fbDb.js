@@ -1,8 +1,8 @@
 import idb from '/js/lib/idb.js';
 
-var dbPromised = idb.open("news-reader", 1, function (upgradeDb) {
+var dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
     var articlesObjectStore = upgradeDb.createObjectStore("articles", {
-        keyPath: "ID"
+        keyPath: "match.id"
     });
     articlesObjectStore.createIndex("post_title", "post_title", {
         unique: false
@@ -15,7 +15,7 @@ function saveForLater(article) {
             var tx = db.transaction("articles", "readwrite");
             var store = tx.objectStore("articles");
             console.log(article);
-            store.add(article.result);
+            store.add(article);
             return tx.complete;
         })
         .then(function () {
