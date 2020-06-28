@@ -44,7 +44,7 @@ function getById(id) {
             .then(function (db) {
                 var tx = db.transaction("articles", "readonly");
                 var store = tx.objectStore("articles");
-                return store.get(id);
+                return store.get(Number(id));
             })
             .then(function (article) {
                 resolve(article);

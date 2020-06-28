@@ -49,6 +49,33 @@ const getCompMatches = (id) => {
     api.compMatches(id, dateGet(-2), dateGet(2))
         .then(data => displayMatch(data));
 }
+
+const getSavedMatches = () => {
+    fbDb.getAll()
+        .then(data => displaySavedMatch(data));
+}
+
+const getSavedMatch = (id) => {
+    fbDb.getById(id)
+        .then(data => detailMatch(data));
+}
+
+const displaySavedMatch = (data) => {
+    let matchesHTML = ``;
+
+    data.forEach((match) => {
+        matchesHTML += callSavedMatch(match.match);
+    });
+    document.getElementById("matches").innerHTML = matchesHTML;
+    document.querySelectorAll(".card-content a, .card-action a").forEach((elm) => {
+        elm.addEventListener("click", (event) => {
+            const urlHash = event.target.getAttribute("href");
+            const path = pathHandler(urlHash.substr(1));
+            loadPage(path);
+        });
+    });
+}
+
 //match displayer
 const displayMatch = (data) => {
     let matchesHTML = ``;
@@ -84,13 +111,8 @@ const detailMatch = (data) => {
     });
     let save = document.getElementById("save");
     save.onclick = function () {
-        test(data);
         fbDb.saveForLater(data);
     }
-}
-
-const test = (data) => {
-    console.log(data);
 }
 
 //matches render
@@ -130,6 +152,51 @@ const callMatch = (match) => {
             </div>
             <div class="card-action">
                 <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
+                    Detail >>
+                </a>
+            </div>
+        </div>
+    </div>
+    `;
+    return res;
+}
+
+const callSavedMatch = (match) => {
+    const res = `    
+    <div class="col s12 m6">
+        <div class="card grey lighten-4">
+            <div class="card-action">
+                <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
+                    ${match.competition.name}
+                    <div class="right">${dateHandler.date(match.utcDate)}</div>
+                </a>
+            </div>
+            <div class="card-content">
+                <div class="row">
+                    <div class="col l11">
+                        <a class="link-to" href="#team?teamId=${match.homeTeam.id}">
+                            ${match.homeTeam.name}
+                        </a>
+                    </div>
+                    <div class="col l1 right">
+                        ${+[match.score.fullTime.homeTeam]}
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col l11">
+                        <a class="link-to" href="#team?teamId=${match.awayTeam.id}">
+                            ${match.awayTeam.name}
+                        </a>
+                    </div>
+                    <div class="col l1 right">
+                        ${+[match.score.fullTime.awayTeam]}
+                    </div>
+                </div>
+                <h6 class="right">${match.status}</h6>
+                <br>
+            </div>
+            <div class="card-action">
+                <a class="blue-text text-lighten-2" href="#smatch?id=${match.id}">
                     Detail >>
                 </a>
             </div>
@@ -265,5 +332,7 @@ export default {
     getTodayMatches,
     getTeamMatches,
     getCompMatches,
+    getSavedMatches,
+    getSavedMatch,
     getMatch
 };
