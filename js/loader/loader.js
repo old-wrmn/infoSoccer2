@@ -2,6 +2,7 @@ import loadNav from './navLoader.js';
 import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 
+
 document.addEventListener("DOMContentLoaded", function () {
     const nav = document.querySelectorAll(".sidenav");
     const urlHash = window.location.hash;
@@ -13,3 +14,18 @@ document.addEventListener("DOMContentLoaded", function () {
     if (path.target == '') path.target = 'home';
     loadPage(path);
 });
+
+if ("serviceWorker" in navigator) {
+    window.addEventListener("load", function () {
+        navigator.serviceWorker
+            .register("/service-worker.js")
+            .then(function () {
+                console.log("Pendaftaran ServiceWorker berhasil");
+            })
+            .catch(function () {
+                console.log("Pendaftaran ServiceWorker gagal");
+            });
+    });
+} else {
+    console.log("ServiceWorker belum didukung browser ini.");
+}

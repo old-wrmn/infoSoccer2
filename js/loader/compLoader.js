@@ -1,12 +1,21 @@
 import fbAPI from '/js/data/fbApi.js';
+import fbCache from '/js/data/fbCache.js';
 import loadPage from './pageLoader.js';
 import loadMatch from './matchLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 
 
-const api = new fbAPI('42a847b581334122919c6632a0d07ced');
+const api = new fbAPI();
+const fbC = new fbCache();
 
 const compDetail = (compId) => {
+    fbC.compStandings(compId)
+        .then(data => {
+            if (data) {
+                getInfo(data.competition);
+                getStandings(data.standings[0].table);
+            }
+        });
     api.compStandings(compId)
         .then(data => {
             getInfo(data.competition);

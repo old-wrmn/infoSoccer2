@@ -1,30 +1,50 @@
 import fbAPI from '/js/data/fbApi.js';
+import fbCache from '/js/data/fbCache.js';
 import dateGet from '/js/date.js';
 import loadPage from './pageLoader.js';
 import pathHandler from '/js/handler/pathHandler.js';
 import dateHandler from '/js/handler/dateHandler.js';
 
 //api call
-const api = new fbAPI('42a847b581334122919c6632a0d07ced');
+const api = new fbAPI();
+const fbC = new fbCache();
 
 //today match in utc +7
 const getTodayMatches = () => {
+
+    fbC.matches(dateGet(-1), dateGet())
+        .then(data => {
+            if (data) displayMatch(data);
+        });
     api.matches(dateGet(-1), dateGet())
         .then(data => displayMatch(data));
 }
 
 //detail match
 const getMatch = (id) => {
+
+    fbC.matchInfo(id)
+        .then(data => {
+            if (data) detailMatch(data);
+        });
     api.matchInfo(id)
         .then(data => detailMatch(data));
 }
 
 const getTeamMatches = (id) => {
+    fbC.teamMatches(id)
+        .then(data => {
+            if (data) displayMatch(data);
+        });
     api.teamMatches(id)
         .then(data => displayMatch(data));
 }
 
 const getCompMatches = (id) => {
+    fbC.compMatches(id, dateGet(-2), dateGet(2))
+        .then(data => {
+            if (data) displayMatch(data);
+        });
     api.compMatches(id, dateGet(-2), dateGet(2))
         .then(data => displayMatch(data));
 }

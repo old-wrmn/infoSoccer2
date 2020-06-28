@@ -1,9 +1,9 @@
 import dateGet from '/js/date.js';
 
 class footBallsApi {
-    constructor(token) {
+    constructor() {
         this.baseUrl = `https://api.football-data.org/v2/`;
-        this.token = token;
+        this.token = '42a847b581334122919c6632a0d07ced';
     }
 
     //fetch call
@@ -14,7 +14,7 @@ class footBallsApi {
                 'X-Auth-Token': this.token
             }
         });
-        const data = await response.json()
+        const data = await response.json();
         return data;
     }
 

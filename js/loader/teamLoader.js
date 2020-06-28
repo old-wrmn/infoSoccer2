@@ -1,11 +1,20 @@
 import fbAPI from '/js/data/fbApi.js';
+import fbCache from '/js/data/fbCache.js';
 import loadMatch from './matchLoader.js';
 import dateHandler from '/js/handler/dateHandler.js';
 
 
-const api = new fbAPI('42a847b581334122919c6632a0d07ced');
+const api = new fbAPI();
+const fbC = new fbCache();
 
 const teamDetail = (id) => {
+    fbC.team(id)
+        .then(data => {
+            if (data) {
+                detailTeam(data);
+                getMember(data.squad);
+            }
+        });
     api.team(id)
         .then(data => {
             detailTeam(data);
