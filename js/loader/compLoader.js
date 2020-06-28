@@ -11,7 +11,7 @@ const fbC = new fbCache();
 const compDetail = (compId) => {
     fbC.compStandings(compId)
         .then(data => {
-            if (data) {
+            if (data !== undefined) {
                 getInfo(data.competition);
                 getStandings(data.standings[0].table);
             }

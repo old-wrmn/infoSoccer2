@@ -14,7 +14,7 @@ const getTodayMatches = () => {
 
     fbC.matches(dateGet(-1), dateGet())
         .then(data => {
-            if (data) displayMatch(data);
+            if (data !== undefined) displayMatch(data);
         });
     api.matches(dateGet(-1), dateGet())
         .then(data => displayMatch(data));
@@ -25,7 +25,7 @@ const getMatch = (id) => {
 
     fbC.matchInfo(id)
         .then(data => {
-            if (data) detailMatch(data);
+            if (data !== undefined) detailMatch(data);
         });
     api.matchInfo(id)
         .then(data => detailMatch(data));
@@ -34,7 +34,7 @@ const getMatch = (id) => {
 const getTeamMatches = (id) => {
     fbC.teamMatches(id)
         .then(data => {
-            if (data) displayMatch(data);
+            if (data !== undefined) displayMatch(data);
         });
     api.teamMatches(id)
         .then(data => displayMatch(data));
@@ -43,7 +43,7 @@ const getTeamMatches = (id) => {
 const getCompMatches = (id) => {
     fbC.compMatches(id, dateGet(-2), dateGet(2))
         .then(data => {
-            if (data) displayMatch(data);
+            if (data !== undefined) displayMatch(data);
         });
     api.compMatches(id, dateGet(-2), dateGet(2))
         .then(data => displayMatch(data));
@@ -81,6 +81,14 @@ const detailMatch = (data) => {
             loadPage(path);
         });
     });
+    let save = document.getElementById("save");
+    save.onclick = function () {
+        test(data);
+    }
+}
+
+const test = (data) => {
+    console.log(data);
 }
 
 //matches render

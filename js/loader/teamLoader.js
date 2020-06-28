@@ -10,7 +10,7 @@ const fbC = new fbCache();
 const teamDetail = (id) => {
     fbC.team(id)
         .then(data => {
-            if (data) {
+            if (data !== undefined) {
                 detailTeam(data);
                 getMember(data.squad);
             }
