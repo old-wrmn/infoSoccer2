@@ -114,8 +114,25 @@ const detailMatch = (data) => {
         });
     });
     let save = document.getElementById("save");
-    save.onclick = function () {
-        fbDb.saveForLater(data);
+    let delThis = document.getElementById("delete");
+    if (save) {
+        save.onclick = function () {
+            M.toast({
+                html: 'Menyimpan Match...',
+                classes: 'rounded'
+            });
+            fbDb.saveForLater(data);
+        }
+    }
+
+    if (delThis) {
+        delThis.onclick = function () {
+            M.toast({
+                html: 'Menghapus Match...',
+                classes: 'rounded'
+            });
+            fbDb.deleteThis(data);
+        }
     }
 }
 

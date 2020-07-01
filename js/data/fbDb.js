@@ -1,62 +1,98 @@
-import idb from '/js/lib/idb.js';
+import idb from "/js/lib/idb.js";
+import loadPage from '/js/loader/pageLoader.js';
 
 //initialize
-var dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
-    var articlesObjectStore = upgradeDb.createObjectStore("articles", {
-        keyPath: "match.id"
+const dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
+    const articlesObjectStore = upgradeDb.createObjectStore("articles", {
+        keyPath: "match.id",
     });
     articlesObjectStore.createIndex("post_title", "post_title", {
-        unique: false
+        unique: false,
     });
 });
 
 //save
-function saveForLater(article) {
+const saveForLater = (article) => {
     dbPromised
-        .then(function (db) {
-            var tx = db.transaction("articles", "readwrite");
-            var store = tx.objectStore("articles");
-            console.log(article);
+        .then((db) => {
+            const tx = db.transaction("articles", "readwrite");
+            const store = tx.objectStore("articles");
             store.add(article);
             return tx.complete;
         })
-        .then(function () {
+        .then(() => {
             console.log("Artikel berhasil di simpan.");
+            M.toast({
+                html: "Match Tersimpan",
+                classes: "rounded",
+            });
+        })
+        .catch((e) => {
+            M.toast({
+                html: `Match Gagal Tersimpan`,
+                classes: "rounded",
+            });
         });
-}
+};
+
+const deleteThis = (data) => {
+    dbPromised
+        .then((db) => {
+            const tx = db.transaction("articles", "readwrite");
+            const store = tx.objectStore("articles");
+            store.delete(data.match.id);
+            return tx.complete;
+        })
+        .then(() => {
+            M.toast({
+                html: "Match dihapus",
+                classes: "rounded",
+            });
+            let path = {};
+            path.target = 'savedMatch';
+            loadPage(path);
+        })
+        .catch((e) => {
+            M.toast({
+                html: `Match Gagal dihapus`,
+                classes: "rounded",
+            });
+        });
+};
 
 //get all match saved
-function getAll() {
-    return new Promise(function (resolve, reject) {
+const getAll = () => {
+    return new Promise((resolve, reject) => {
         dbPromised
-            .then(function (db) {
-                var tx = db.transaction("articles", "readonly");
-                var store = tx.objectStore("articles");
+            .then((db) => {
+                const tx = db.transaction("articles", "readonly");
+                const store = tx.objectStore("articles");
                 return store.getAll();
             })
-            .then(function (articles) {
+            .then((articles) => {
                 resolve(articles);
             });
     });
-}
+};
 
 //get match saved by id
-function getById(id) {
+const getById = (id) => {
     return new Promise(function (resolve, reject) {
         dbPromised
             .then(function (db) {
-                var tx = db.transaction("articles", "readonly");
-                var store = tx.objectStore("articles");
+                const tx = db.transaction("articles", "readonly");
+                const store = tx.objectStore("articles");
                 return store.get(Number(id));
             })
             .then(function (article) {
                 resolve(article);
             });
     });
-}
+};
 
 export default {
     getAll,
     getById,
-    saveForLater
+    deleteThis,
+    saveForLater,
 };
