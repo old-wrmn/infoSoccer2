@@ -3,7 +3,7 @@ import loadPage from '/js/loader/pageLoader.js';
 
 //initialize
 const dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
-    const articlesObjectStore = upgradeDb.createObjectStore("articles", {
+    const articlesObjectStore = upgradeDb.createObjectStore("matches", {
         keyPath: "match.id",
     });
     articlesObjectStore.createIndex("post_title", "post_title", {
@@ -15,17 +15,18 @@ const dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {
 const saveForLater = (article) => {
     dbPromised
         .then((db) => {
-            const tx = db.transaction("articles", "readwrite");
-            const store = tx.objectStore("articles");
+            const tx = db.transaction("matches", "readwrite");
+            const store = tx.objectStore("matches");
             store.put(article);
             return tx.complete;
         })
         .then(() => {
-            console.log("Artikel berhasil di simpan.");
             M.toast({
                 html: "Match Tersimpan",
                 classes: "rounded",
             });
+            document.getElementById('save').classList.add('disabled');
+            document.querySelector('h3').innerHTML += ' (Saved)'
         })
         .catch((e) => {
             M.toast({
@@ -38,8 +39,8 @@ const saveForLater = (article) => {
 const deleteThis = (data) => {
     dbPromised
         .then((db) => {
-            const tx = db.transaction("articles", "readwrite");
-            const store = tx.objectStore("articles");
+            const tx = db.transaction("matches", "readwrite");
+            const store = tx.objectStore("matches");
             store.delete(data.match.id);
             return tx.complete;
         })
@@ -65,12 +66,12 @@ const getAll = () => {
     return new Promise((resolve, reject) => {
         dbPromised
             .then((db) => {
-                const tx = db.transaction("articles", "readonly");
-                const store = tx.objectStore("articles");
+                const tx = db.transaction("matches", "readonly");
+                const store = tx.objectStore("matches");
                 return store.getAll();
             })
-            .then((articles) => {
-                resolve(articles);
+            .then((matches) => {
+                resolve(matches);
             });
     });
 };
@@ -80,12 +81,12 @@ const getById = (id) => {
     return new Promise(function (resolve, reject) {
         dbPromised
             .then(function (db) {
-                const tx = db.transaction("articles", "readonly");
-                const store = tx.objectStore("articles");
+                const tx = db.transaction("matches", "readonly");
+                const store = tx.objectStore("matches");
                 return store.get(Number(id));
             })
-            .then(function (article) {
-                resolve(article);
+            .then(function (match) {
+                resolve(match);
             });
     });
 };

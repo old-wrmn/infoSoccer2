@@ -18,7 +18,7 @@ function loadPage(path = {}) {
             } else if (path.target === "competition") {
                 comp.compDetail(path.compId);
             } else if (path.target === "savedMatch") {
-                match.getSavedMatches(path.compId);
+                match.getSavedMatches();
             } else if (path.target === "smatch") {
                 match.getSavedMatch(path.id);
             }

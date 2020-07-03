@@ -21,8 +21,13 @@ const getTodayMatches = () => {
 }
 
 //detail match
-const getMatch = (id) => {
+const getMatch = async (id) => {
 
+    const saved = await fbDb.getById(id);
+    if (saved) {
+        document.getElementById('save').classList.add('disabled');
+        document.querySelector('h3').innerHTML += ' (Saved)'
+    }
     fbC.matchInfo(id)
         .then(data => {
             if (data !== undefined) detailMatch(data);
@@ -54,7 +59,14 @@ const getCompMatches = (id) => {
 //get all saved match from index db
 const getSavedMatches = () => {
     fbDb.getAll()
-        .then(data => displaySavedMatch(data));
+        .then(data => {
+            console.log(data);
+            if (data.length !== 0) {
+                displaySavedMatch(data)
+            } else {
+                document.getElementById('matches').innerHTML = "<div class='center'><h5>Tidak ada data tersimpan</h5></div>"
+            }
+        });
 }
 
 //get saved match from index db
