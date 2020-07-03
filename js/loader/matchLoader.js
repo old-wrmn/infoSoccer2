@@ -140,11 +140,11 @@ const detailMatch = (data) => {
 const callMatch = (match) => {
     const res = `    
     <div class="col s12 m6">
-        <div class="card grey lighten-4">
-            <div class="card-action">
-                <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
+        <div class="card blue lighten-5">
+            <div class="card-content white">
+                <a class="blue-text text-darken-2" href="#match?id=${match.id}">
                     ${match.competition.name}
-                    <div class="right">${dateHandler.date(match.utcDate)}</div>
+                    <div class="right">${dateHandler.date(match.utcDate)}<br> </div>
                 </a>
             </div>
             <div class="card-content">
@@ -171,7 +171,7 @@ const callMatch = (match) => {
                 <h6 class="right">${match.status}</h6>
                 <br>
             </div>
-            <div class="card-action">
+            <div class="card-action white">
                 <a class="blue-text text-lighten-2" href="#match?id=${match.id}">
                     Detail >>
                 </a>

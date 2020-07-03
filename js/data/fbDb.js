@@ -17,7 +17,7 @@ const saveForLater = (article) => {
         .then((db) => {
             const tx = db.transaction("articles", "readwrite");
             const store = tx.objectStore("articles");
-            store.add(article);
+            store.put(article);
             return tx.complete;
         })
         .then(() => {

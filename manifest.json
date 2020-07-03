@@ -1,8 +1,8 @@
 {
     "name": "info Soccer",
     "short_name": "infoSoccer",
-    "theme_color": "#aaaaaa",
-    "background_color": "#aaaaaa",
+    "theme_color": "#42a5f5",
+    "background_color": "#42a5f5",
     "gcm_sender_id": "29759766860",
     "display": "standalone",
     "start_url": "/index.html",
