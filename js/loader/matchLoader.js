@@ -60,8 +60,7 @@ const getCompMatches = (id) => {
 const getSavedMatches = () => {
     fbDb.getAll()
         .then(data => {
-            console.log(data);
-            if (data.length !== 0) {
+            if (data.length > 0) {
                 displaySavedMatch(data)
             } else {
                 document.getElementById('matches').innerHTML = "<div class='center'><h5>Tidak ada data tersimpan</h5></div>"

@@ -48,13 +48,13 @@ function requestPermission() {
 }
 
 self.addEventListener('push', function (event) {
-    var body;
+    const body;
     if (event.data) {
         body = event.data.text();
     } else {
         body = 'Push message no payload';
     }
-    var options = {
+    const options = {
         body: body,
         icon: '/images/icons/icon-32x32.png',
         vibrate: [100, 50, 100],

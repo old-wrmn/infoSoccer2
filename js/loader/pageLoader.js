@@ -27,9 +27,9 @@ function loadPage(path = {}) {
             if (this.status == 200) {
                 content.innerHTML = xhttp.responseText;
             } else if (this.status == 404) {
-                content.innerHTML = "<p>Halaman tidak ditemukan.</p>";
+                content.innerHTML = `<div class='center'><h3>Halaman Tidak Ditemukan</h3><h5>Error code  <br>${this.status}</h5></div>`;
             } else {
-                content.innerHTML = "<p>Ups.. halaman tidak dapat diakses.</p>";
+                content.innerHTML = `<div class='center'><h3>Halaman Tidak Dapat Diakses</h3><h5>Error code <br> ${this.status}</h5></div>`;
             }
         }
     };

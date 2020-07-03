@@ -1,5 +1,5 @@
 const CACHE_NAME = "infoSoccer";
-var urlsToCache = [
+const urlsToCache = [
     "/css/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
     "/css/icon.css",
     "/css/materialize.min.css",
@@ -50,7 +50,7 @@ self.addEventListener("install", function (event) {
 });
 
 self.addEventListener("fetch", function (event) {
-    var base_url = "https://api.football-data.org/v2/";
+    const base_url = "https://api.football-data.org/v2/";
     if (event.request.url.indexOf(base_url) > -1) {
         event.respondWith(
             caches.open(CACHE_NAME).then(function (cache) {
@@ -87,13 +87,13 @@ self.addEventListener("activate", function (event) {
 });
 
 self.addEventListener('push', function (event) {
-    var body;
+    let body;
     if (event.data) {
         body = event.data.text();
     } else {
         body = 'Push message no payload';
     }
-    var options = {
+    const options = {
         body: body,
         icon: 'images/icons/icon-32x32.png',
         vibrate: [100, 50, 100],
