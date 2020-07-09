@@ -1,6 +1,6 @@
 import loadNav from './navLoader.js';
 import loadPage from './pageLoader.js';
-import pathHandler from '/js/handler/pathHandler.js';
+import pathHandler from './../handler/pathHandler.js';
 
 //event loaded content listener
 document.addEventListener("DOMContentLoaded", function () {

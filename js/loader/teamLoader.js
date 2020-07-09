@@ -1,7 +1,7 @@
-import fbAPI from '/js/data/fbApi.js';
-import fbCache from '/js/data/fbCache.js';
+import fbAPI from './../data/fbApi.js';
+import fbCache from './../data/fbCache.js';
 import loadMatch from './matchLoader.js';
-import dateHandler from '/js/handler/dateHandler.js';
+import dateHandler from './../handler/dateHandler.js';
 
 //class call
 const api = new fbAPI();

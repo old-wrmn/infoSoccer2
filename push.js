@@ -1,4 +1,4 @@
-const webPush = require('web-push');
+var webPush = require('web-push');
 const vapidKeys = {
     "publicKey": "BGLl5utwPPV4xgUIc-sgyqv-gz3v7vG9LUX4SiiiYQs5APhPA6HDEw1co90iQWgsrLuJmhFRHu0AfxYF6N4RDfU",
     "privateKey": "iLWPG2mYV5mXvSvNF_oLiTb-ulPTe_SeCkE3oDme5dE"
@@ -10,15 +10,15 @@ webPush.setVapidDetails(
     vapidKeys.publicKey,
     vapidKeys.privateKey
 )
-const pushSubscription = {
-    "endpoint": "https://fcm.googleapis.com/fcm/send/ccV9Oecn6qg:APA91bFsYarb38bZI4uePgKi4PeJSZrZVZY3oVzPb0D7uFUiWUJ2pDxtdN67QpxUFQ46azxnRer2jWKpo7KPf2GXtPG99yCBfUt9BBwTOEb4t_56xrInrfVh0p4PJKxLKn2p5izbbKPx",
+var pushSubscription = {
+    "endpoint": "https://fcm.googleapis.com/fcm/send/e0zGElymwJQ:APA91bHTt1oiBMjIDyVFAziJ4KogkFo5T2PVJRN12GYMJ0kr_qFVdmkqZ2-L3P8ndVO4hSzUalP_2cClm7omN0e-j09Crb8jvdj9DNOANs7Hq3GCxTFFNud2pxXCot815WtignmduBNl",
     "keys": {
-        "p256dh": "BENjarqGw0C2BqTcllDDHtlP187UPfype3jziCDJm5rbG29ksZUp/YpjKtjWc4YdZm+csiM5MxHXIpJCCPbF56o=",
-        "auth": "NxXRtE1wDXy88pGvrKcjcA=="
+        "p256dh": "BH041+ybhNsMzXn3WWDKmySadoAbtqWHnJr4EpjZquYqwdPJjXpTNJXmPFvEcVlyUns7O18H7FCvRzlGMyqYS/c=",
+        "auth": "iOmQwnRDAnEH2WaadcF1Fw=="
     }
 };
-const payload = 'Jangan Lewatkan Liga Favorit Anda';
-const options = {
+var payload = 'Jangan Lewatkan Liga Favorit Anda';
+var options = {
     gcmAPIKey: '29759766860',
     TTL: 60
 };

@@ -1,90 +1,110 @@
-const CACHE_NAME = "infoSoccer";
-const urlsToCache = [
-    "/css/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2",
-    "/css/icon.css",
-    "/css/materialize.min.css",
-    "/css/style.css",
-    "/html/nav.html",
-    "/html/pages/about.html",
-    "/html/pages/competition.html",
-    "/html/pages/home.html",
-    "/html/pages/match.html",
-    "/html/pages/savedMatch.html",
-    "/html/pages/smatch.html",
-    "/html/pages/team.html",
-    "/images/icons/icon-128x128.png",
-    "/images/icons/icon-144x144.png",
-    "/images/icons/icon-152x152.png",
-    "/images/icons/icon-192x192.png",
-    "/images/icons/icon-384x384.png",
-    "/images/icons/icon-512x512.png",
-    "/images/icons/icon-72x72.png",
-    "/images/icons/icon-32x32.png",
-    "/images/icons/icon-96x96.png",
-    "/js/data/fbApi.js",
-    "/js/data/fbCache.js",
-    "/js/data/fbDb.js",
-    "/js/handler/dateHandler.js",
-    "/js/handler/pathHandler.js",
-    "/js/lib/materialize.min.js",
-    "/js/lib/idb.js",
-    "/js/loader/compLoader.js",
-    "/js/loader/loader.js",
-    "/js/loader/matchLoader.js",
-    "/js/loader/navLoader.js",
-    "/js/loader/pageLoader.js",
-    "/js/loader/teamLoader.js",
-    "/js/date.js",
-    "/js/script.js",
-    "/manifest.json",
-    "/index.html",
-    "/"
-];
+importScripts('https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js');
 
-self.addEventListener("install", function (event) {
-    event.waitUntil(
-        caches.open(CACHE_NAME).then(function (cache) {
-            return cache.addAll(urlsToCache);
-        })
-    );
-});
+if (workbox)
+    console.log(`ok`);
+else
+    console.log(`Workbox fail to load`);
 
-self.addEventListener("fetch", function (event) {
-    const base_url = "https://api.football-data.org/v2/";
-    if (event.request.url.indexOf(base_url) > -1) {
-        event.respondWith(
-            caches.open(CACHE_NAME).then(function (cache) {
-                return fetch(event.request).then(function (response) {
-                    cache.put(event.request.url, response.clone());
-                    return response;
-                })
-            })
-        );
-    } else {
-        event.respondWith(
-            caches.match(event.request, {
-                ignoreSearch: true
-            }).then(function (response) {
-                return response || fetch(event.request);
-            })
-        )
+workbox.precaching.precacheAndRoute([{
+        url: '/css/flUhRq6tzZclQEJ-Vdg-IuiaDsNc.woff2',
+        revision: '1'
+    },
+    {
+        url: '/css/icon.css',
+        revision: '1'
+    },
+    {
+        url: '/css/materialize.min.css',
+        revision: '1'
+    },
+    {
+        url: '/css/style.css',
+        revision: '1'
+    },
+    {
+        url: '/html/nav.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/about.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/competition.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/home.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/match.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/savedMatch.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/smatch.html',
+        revision: '1'
+    },
+    {
+        url: '/html/pages/team.html',
+        revision: '1'
+    },
+    {
+        url: '/js/lib/materialize.min.js',
+        revision: '1'
+    },
+    {
+        url: '/js/lib/idb.js',
+        revision: '1'
+    },
+    {
+        url: '/js/date.js',
+        revision: '1'
+    },
+    {
+        url: '/js/script.js',
+        revision: '1'
+    },
+    {
+        url: '/manifest.json',
+        revision: '1'
+    },
+    {
+        url: '/index.html',
+        revision: '1'
     }
-});
+]);
 
-self.addEventListener("activate", function (event) {
-    event.waitUntil(
-        caches.keys().then(function (cacheNames) {
-            return Promise.all(
-                cacheNames.map(function (cacheName) {
-                    if (cacheName != CACHE_NAME) {
-                        console.log("ServiceWorker: cache " + cacheName + " dihapus");
-                        return caches.delete(cacheName);
-                    }
-                })
-            );
-        })
-    );
-});
+workbox.routing.registerRoute(
+    new RegExp('/js/'),
+    workbox.strategies.cacheFirst({
+        cacheName: 'js'
+    })
+);
+workbox.routing.registerRoute(
+    new RegExp('/images/icons/'),
+    workbox.strategies.cacheFirst({
+        cacheName: 'images'
+    })
+);
+
+workbox.routing.registerRoute(
+    /^https:\/\/api\.football-data\.org/,
+    workbox.strategies.networkFirst({
+        cacheName: 'football-data'
+    })
+);
+
+workbox.routing.registerRoute(
+    /^https:\/\/upload\.wikimedia\.org/,
+    workbox.strategies.cacheFirst({
+        cacheName: 'club-logo'
+    })
+);
 
 self.addEventListener('push', function (event) {
     let body;

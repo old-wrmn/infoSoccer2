@@ -1,8 +1,8 @@
-import fbAPI from '/js/data/fbApi.js';
-import fbCache from '/js/data/fbCache.js';
+import fbAPI from './../data/fbApi.js';
+import fbCache from './../data/fbCache.js';
 import loadPage from './pageLoader.js';
 import loadMatch from './matchLoader.js';
-import pathHandler from '/js/handler/pathHandler.js';
+import pathHandler from './../handler/pathHandler.js';
 
 //call class
 const api = new fbAPI();

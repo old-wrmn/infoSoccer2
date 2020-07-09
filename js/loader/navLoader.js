@@ -1,5 +1,5 @@
 import loadPage from './pageLoader.js';
-import pathHandler from '/js/handler/pathHandler.js';
+import pathHandler from './../handler/pathHandler.js';
 
 const loadNav = () => {
     const xhttp = new XMLHttpRequest();

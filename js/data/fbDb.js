@@ -1,5 +1,5 @@
-import idb from "/js/lib/idb.js";
-import loadPage from '/js/loader/pageLoader.js';
+import idb from "./../lib/idb.js";
+import loadPage from './../loader/pageLoader.js';
 
 //initialize
 const dbPromised = idb.open("infoSoccer", 1, function (upgradeDb) {

@@ -1,12 +1,14 @@
 if (!('serviceWorker' in navigator)) {
     console.log("Service worker tidak didukung browser ini.");
 } else {
-    registerServiceWorker();
-    requestPermission();
+    registerServiceWorker()
+        .then(() => {
+            requestPermission()
+        });
 }
 // Register service worker
 function registerServiceWorker() {
-    return navigator.serviceWorker.register('/service-worker.js')
+    return navigator.serviceWorker.register('./../service-worker.js')
         .then(function (registration) {
             console.log('Registrasi service worker berhasil.');
             return registration;
@@ -48,7 +50,7 @@ function requestPermission() {
 }
 
 self.addEventListener('push', function (event) {
-    const body;
+    let body;
     if (event.data) {
         body = event.data.text();
     } else {

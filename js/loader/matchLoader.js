@@ -1,10 +1,10 @@
-import fbAPI from '/js/data/fbApi.js';
-import fbCache from '/js/data/fbCache.js';
-import fbDb from '/js/data/fbDb.js';
-import dateGet from '/js/date.js';
+import fbAPI from './../data/fbApi.js';
+import fbCache from './../data/fbCache.js';
+import fbDb from './../data/fbDb.js';
+import dateGet from './../date.js';
 import loadPage from './pageLoader.js';
-import pathHandler from '/js/handler/pathHandler.js';
-import dateHandler from '/js/handler/dateHandler.js';
+import pathHandler from './../handler/pathHandler.js';
+import dateHandler from './../handler/dateHandler.js';
 
 //api call
 const api = new fbAPI();
